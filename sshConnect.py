@@ -1,0 +1,33 @@
+
+import paramiko
+
+
+def sshConnect(IP_ADDRESS = "192.168.127.129", 
+                USER_NAME = 'kali', 
+                KEY_FILENAME = 'password.pem', 
+                serverPass="student",
+                CMD = 'cd ~ ; ls -l'
+                ):
+    # sshクライアントの作成
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.WarningPolicy())
+    # 上記で設定したIPアドレス、ユーザー名、キーファイルを渡す
+    client.connect(IP_ADDRESS,
+                username=USER_NAME,
+                password=serverPass,
+                timeout=5.0)
+
+    # コマンドの実行
+    stdin, stdout, stderr = client.exec_command(CMD)
+    # コマンド実行結果を変数に格納
+    cmd_result = ''
+    for line in stdout:
+        cmd_result += line
+
+    # 実行結果を出力
+    print(cmd_result)
+
+    # ssh接続断
+    client.close()
+    del client, stdin, stdout, stderr
+
