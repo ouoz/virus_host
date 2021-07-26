@@ -7,6 +7,7 @@ def sshConnect(IP_ADDRESS = "192.168.127.129",
                 KEY_FILENAME = 'password.pem', 
                 serverPass="student",
                 CMD = 'cd ~ ; ls -l'
+                # CMD = "vncserver"
                 ):
     # sshクライアントの作成
     client = paramiko.SSHClient()
@@ -16,6 +17,8 @@ def sshConnect(IP_ADDRESS = "192.168.127.129",
                 username=USER_NAME,
                 password=serverPass,
                 timeout=5.0)
+    
+    print("this is coco")
 
     # コマンドの実行
     stdin, stdout, stderr = client.exec_command(CMD)
